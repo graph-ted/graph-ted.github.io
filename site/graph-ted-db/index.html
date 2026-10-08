@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>graph-ted-db: a graph database in a folder</title>
+  <meta name="description" content="graph-ted-db is a graph database in a folder. No server, shares like files. Use it from Python or over HTTP and query with Cypher.">
+  <link rel="canonical" href="https://graph-ted.com/graph-ted-db/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18181b" media="(prefers-color-scheme: dark)">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="graph-ted">
+  <meta property="og:title" content="graph-ted-db: a graph database in a folder">
+  <meta property="og:description" content="graph-ted-db is a graph database in a folder. No server, shares like files. Use it from Python or over HTTP and query with Cypher.">
+  <meta property="og:url" content="https://graph-ted.com/graph-ted-db/">
+  <meta property="og:image" content="https://graph-ted.com/assets/og-graph-ted-db.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="graph-ted-db logo with the line: A graph database in a folder. No server, shares like files.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="graph-ted-db: a graph database in a folder">
+  <meta name="twitter:description" content="graph-ted-db is a graph database in a folder. No server, shares like files. Use it from Python or over HTTP and query with Cypher.">
+  <meta name="twitter:image" content="https://graph-ted.com/assets/og-graph-ted-db.png">
+  <meta name="twitter:image:alt" content="graph-ted-db logo with the line: A graph database in a folder. No server, shares like files.">
+
+  <link rel="icon" href="/assets/favicon-db.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-db-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/assets/favicon-db.ico" sizes="any">
+  <link rel="preload" href="/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/site.css">
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="graph-ted home">
+        <img src="/assets/logo/graph-ted.svg" alt="graph-ted" width="142" height="72">
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/graph-ted-db/docs/">Docs</a></li>
+          <li><a href="https://github.com/graph-ted/graph-ted-db">GitHub</a></li>
+          <li><a href="/graph-ted-db/docs/llms.txt">llms.txt</a></li>
+        </ul>
+        <button type="button" class="theme-toggle" id="theme-toggle" hidden aria-label="Switch to dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero hero-db" aria-labelledby="hero-title">
+      <div class="wrap">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">graph-ted</a></li>
+            <li><span aria-current="page">graph-ted-db</span></li>
+          </ol>
+        </nav>
+        <div class="db-hero">
+          <div>
+            <img class="hero-logo" src="/assets/logo/graph-ted-db.svg" alt="" width="208" height="71">
+            <h1 id="hero-title">graph-ted-db</h1>
+            <p class="lead">A graph database in a folder. No server, shares like files.</p>
+          </div>
+          <article class="card card-live" aria-label="Install and quick start">
+            <div class="snippet" role="group" aria-label="Install and quick start">
+<pre><code><span class="prompt" aria-hidden="true">$ </span>pip install graph-ted-db</code></pre>
+<pre><code>from graph_ted_db import GraphStore, init_graph
+init_graph("./my-graph", name="demo", exist_ok=True)
+g = GraphStore.open("./my-graph")
+g.make_node(labels=["Person"], props={"name": "Alice"})</code></pre>
+            </div>
+            <p class="note">Requires Python 3.10+. Until the package is on PyPI, install from a git checkout: <code>pip install -e .</code></p>
+            <ul class="card-links">
+              <li><a class="button" href="/graph-ted-db/docs/">Docs</a></li>
+              <li><a href="https://github.com/graph-ted/graph-ted-db">GitHub</a></li>
+              <li><a href="/graph-ted-db/docs/llms.txt">llms.txt</a></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-muted" id="notes" aria-labelledby="notes-title">
+      <div class="wrap">
+        <h2 id="notes-title">Good to know</h2>
+        <ul class="principles principles-2">
+          <li>
+            <h3>It&rsquo;s a folder</h3>
+            <p>A graph is a folder of plain files. Open it in-process from Python or serve it over HTTP, and share it by syncing the folder through the file-sync service you already use.</p>
+            <!-- slot:sharing-caveat
+              When the two-writer sync test reports, link its sharing notes here, e.g.
+              <p class="note"><a href="/graph-ted-db/docs/sharing/">Sharing a graph: what to expect</a></p>
+              Keep this a comment until the target page exists (check_site.py fails on dead links).
+            -->
+          </li>
+          <li>
+            <h3>Your storage is the security boundary</h3>
+            <p>Data is stored as ordinary files. Protect a graph the way you protect your other files: disk encryption, account permissions, backups, and what you expose on the network.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <img class="footer-mark" src="/assets/favicon-db.svg" alt="" width="32" height="32">
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="https://github.com/graph-ted">GitHub</a></li>
+          <li><a href="mailto:developer.agent@graph-ted.com">developer.agent@graph-ted.com</a></li>
+          <li><a href="https://github.com/graph-ted/graph-ted-db/issues/new/choose">Report an issue</a></li>
+          <li><a href="https://github.com/graph-ted/graph-ted-db/discussions">Discussions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>graph-ted: right-sized graphs that start local</title>
+  <meta name="description" content="graph-ted is a family of tools for working with right-sized graphs that start local, share like files through your file-sync service, and go offline.">
+  <link rel="canonical" href="https://graph-ted.com/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18181b" media="(prefers-color-scheme: dark)">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="graph-ted">
+  <meta property="og:title" content="graph-ted: right-sized graphs that start local">
+  <meta property="og:description" content="A family of tools for working with right-sized graphs that start local, share like files through your file-sync service, and go offline.">
+  <meta property="og:url" content="https://graph-ted.com/">
+  <meta property="og:image" content="https://graph-ted.com/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="graph-ted logo with the line: right-sized graphs that start local, share like files, and go offline.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="graph-ted: right-sized graphs that start local">
+  <meta name="twitter:description" content="A family of tools for working with right-sized graphs that start local, share like files through your file-sync service, and go offline.">
+  <meta name="twitter:image" content="https://graph-ted.com/assets/og.png">
+  <meta name="twitter:image:alt" content="graph-ted logo with the line: right-sized graphs that start local, share like files, and go offline.">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="preload" href="/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/site.css">
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="graph-ted home">
+        <img src="/assets/logo/graph-ted.svg" alt="graph-ted" width="142" height="72">
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#principles">Principles</a></li>
+          <li><a href="/graph-ted-db/">Docs</a></li>
+          <li><a href="https://github.com/graph-ted">GitHub</a></li>
+        </ul>
+        <button type="button" class="theme-toggle" id="theme-toggle" hidden aria-label="Switch to dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <h1 id="hero-title">Right-sized graphs that start local, share like files, and go offline.</h1>
+        <p class="lead">graph-ted is a family of tools for working with graphs that fit on your machine. Keep a graph in a folder you own, share a graph through your file-sync service, and keep working when you are offline.</p>
+        <p class="actions">
+          <a class="button" href="#projects">See the projects</a>
+          <a class="button button-outline" href="https://github.com/graph-ted">graph-ted on GitHub</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="wrap">
+        <h2 id="projects-title">Projects</h2>
+        <div class="grid">
+          <article class="card card-live" aria-labelledby="db-title">
+            <img class="card-logo" src="/assets/logo/graph-ted-db.svg" alt="" width="208" height="71">
+            <h3 id="db-title">graph-ted-db</h3>
+            <p>Local property-graph storage for Python. Your graph lives in a folder of plain files on disk. Open it in-process, query it with a Cypher subset, and share a graph through your file-sync service.</p>
+            <div class="snippet" role="group" aria-label="Install and quick start">
+<pre><code><span class="prompt" aria-hidden="true">$ </span>pip install graph-ted-db</code></pre>
+<pre><code>from graph_ted_db import GraphStore, init_graph
+init_graph("./my-graph", name="demo", exist_ok=True)
+g = GraphStore.open("./my-graph")
+g.make_node(labels=["Person"], props={"name": "Alice"})</code></pre>
+            </div>
+            <p class="note">Requires Python 3.10+. Until the package is on PyPI, install from a git checkout: <code>pip install -e .</code></p>
+            <ul class="card-links">
+              <li><a class="button" href="/graph-ted-db/">Docs</a></li>
+              <li><a href="https://github.com/graph-ted/graph-ted-db">GitHub</a></li>
+              <li><a href="/graph-ted-db/llms.txt">llms.txt</a></li>
+            </ul>
+          </article>
+
+          <article class="card card-soon" aria-labelledby="app-title">
+            <p class="badge">Coming soon</p>
+            <h3 id="app-title">graph-ted app</h3>
+            <p>An app for building and exploring your graphs.</p>
+          </article>
+
+          <article class="card card-soon" aria-labelledby="hosting-title">
+            <p class="badge">Coming soon</p>
+            <h3 id="hosting-title">Team hosting</h3>
+            <p>Hosted graphs for teams that would rather not run their own.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-muted" id="principles" aria-labelledby="principles-title">
+      <div class="wrap">
+        <h2 id="principles-title">Principles</h2>
+        <ul class="principles">
+          <li>
+            <h3>Local-first</h3>
+            <p>A graph starts as files on your own machine. There is no server to run for the default path, and your work does not depend on a connection.</p>
+          </li>
+          <li>
+            <h3>Your storage and network are the security boundary</h3>
+            <p>Data is stored as ordinary files. Protect it the way you protect your other files: disk encryption, account permissions, backups, and what you expose on the network.</p>
+          </li>
+          <li>
+            <h3>Open and agent-friendly</h3>
+            <p>Readable on-disk formats, a documented Python API, and docs published as <code>llms.txt</code> so agents can read them too.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <img class="footer-mark" src="/favicon.svg" alt="" width="32" height="32">
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="https://github.com/graph-ted">GitHub</a></li>
+          <li><a href="mailto:developer.agent@graph-ted.com">developer.agent@graph-ted.com</a></li>
+          <li><a href="https://github.com/graph-ted/graph-ted-db/issues/new/choose">Report an issue</a></li>
+          <li><a href="https://github.com/graph-ted/graph-ted-db/discussions">Discussions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

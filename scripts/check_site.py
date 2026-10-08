@@ -7,8 +7,9 @@
 - no off-origin assets: scripts, stylesheets, images, icons, fonts, and CSS
   url()s must be same-origin (outbound <a href> links are fine)
 - required meta tags and canonical URL on each landing page, 1200x630 og images
-- sources/graph-ted-db.ref pins a full commit; the db landing page keeps its
-  sharing-caveat slot
+- sources/graph-ted-db.ref pins a full commit; the home page and the db
+  landing page link to the sharing notes (/graph-ted-db/docs/sharing/), and
+  with --build that page must exist in the built docs
 - copy rules: canonical domain only, no embedded-database naming
 
     python3 scripts/check_site.py [--build build/]
@@ -32,6 +33,9 @@ LANDING = {
     "graph-ted-db/index.html": (CANONICAL + "graph-ted-db/", "assets/og-graph-ted-db.png"),
 }
 DOCS_PREFIX = "/graph-ted-db/docs/"
+SHARING = DOCS_PREFIX + "sharing/"
+# Pages that must link to the sharing notes
+SHARING_LINKS = ["index.html", "graph-ted-db/index.html"]
 PIN = ROOT / "sources" / "graph-ted-db.ref"
 # Copy rules, written as patterns so the banned strings do not appear here.
 BANNED = {
@@ -161,9 +165,13 @@ def main() -> int:
     if not re.fullmatch(r"[0-9a-f]{40}", pin.get("commit", "")):
         errors.append("sources/graph-ted-db.ref: commit should be a full 40-character SHA")
 
-    db_page = (SITE / "graph-ted-db" / "index.html").read_text(encoding="utf-8")
-    if "<!-- slot:sharing-caveat" not in db_page:
-        errors.append("site/graph-ted-db/index.html: sharing-caveat slot comment is missing")
+    for page in SHARING_LINKS:
+        if f'href="{SHARING}"' not in (SITE / page).read_text(encoding="utf-8"):
+            errors.append(f"site/{page}: no link to {SHARING}")
+    if args.build:
+        target = args.build / SHARING.lstrip("/") / "index.html"
+        if not target.is_file():
+            errors.append(f"{SHARING} is missing from the build ({target})")
 
     for e in errors:
         print(f"error: {e}", file=sys.stderr)

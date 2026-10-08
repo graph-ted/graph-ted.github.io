@@ -49,7 +49,7 @@ scripts/build_site.sh       # full build into build/ (needs a graph-ted-db clone
 
 The build reads the pinned commit from a sibling `../graph-ted-db` clone (fetching if needed) or clones the repository into a temporary directory. While graph-ted-db is private, that needs read access to it. This repository's Pages is off and nothing deploys yet; a deploy workflow would run the same script.
 
-The graph-ted-db landing page keeps a commented-out slot (`<!-- slot:sharing-caveat ... -->`) for a link to sharing notes once the two-writer sync test reports. Uncomment it only when the target page exists; `check_site.py` fails on dead links.
+The home page ("Why the database first?") and the graph-ted-db landing page link to the sharing notes at `/graph-ted-db/docs/sharing/`. `check_site.py --build` fails if that page is missing from the built docs, so the pin must stay at a graph-ted-db commit that has `docs/sharing.md`.
 
 ## Social preview
 

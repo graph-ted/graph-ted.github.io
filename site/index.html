@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>graph-ted: right-sized graphs that start local</title>
-  <meta name="description" content="graph-ted is a family of tools for working with right-sized graphs that start local, share like files through your file-sync service, and go offline.">
+  <title>graph-ted: a free toolkit for knowledge graphs</title>
+  <meta name="description" content="Create, store, and explore connected knowledge, on your own machine or across a team. graph-ted is built in the open, starting with graph-ted-db.">
   <link rel="canonical" href="https://graph-ted.com/">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)">
@@ -12,18 +12,18 @@
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="graph-ted">
-  <meta property="og:title" content="graph-ted: right-sized graphs that start local">
-  <meta property="og:description" content="A family of tools for working with right-sized graphs that start local, share like files through your file-sync service, and go offline.">
+  <meta property="og:title" content="graph-ted: a free toolkit for knowledge graphs">
+  <meta property="og:description" content="Create, store, and explore connected knowledge, on your own machine or across a team. graph-ted is built in the open, starting with graph-ted-db.">
   <meta property="og:url" content="https://graph-ted.com/">
   <meta property="og:image" content="https://graph-ted.com/assets/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="graph-ted logo with the line: right-sized graphs that start local, share like files, and go offline.">
+  <meta property="og:image:alt" content="graph-ted logo with the line: A free toolkit for knowledge graphs.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="graph-ted: right-sized graphs that start local">
-  <meta name="twitter:description" content="A family of tools for working with right-sized graphs that start local, share like files through your file-sync service, and go offline.">
+  <meta name="twitter:title" content="graph-ted: a free toolkit for knowledge graphs">
+  <meta name="twitter:description" content="Create, store, and explore connected knowledge, on your own machine or across a team. graph-ted is built in the open, starting with graph-ted-db.">
   <meta name="twitter:image" content="https://graph-ted.com/assets/og.png">
-  <meta name="twitter:image:alt" content="graph-ted logo with the line: right-sized graphs that start local, share like files, and go offline.">
+  <meta name="twitter:image:alt" content="graph-ted logo with the line: A free toolkit for knowledge graphs.">
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
@@ -43,9 +43,10 @@
       </a>
       <nav class="site-nav" aria-label="Main">
         <ul>
-          <li><a href="#projects">Projects</a></li>
+          <li><a href="#why">Why now</a></li>
+          <li><a href="#kit">The kit</a></li>
           <li><a href="#principles">Principles</a></li>
-          <li><a href="/graph-ted-db/">Docs</a></li>
+          <li><a href="/graph-ted-db/docs/">Docs</a></li>
           <li><a href="https://github.com/graph-ted">GitHub</a></li>
         </ul>
         <button type="button" class="theme-toggle" id="theme-toggle" hidden aria-label="Switch to dark mode">
@@ -59,48 +60,47 @@
   <main id="main" tabindex="-1">
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap">
-        <h1 id="hero-title">Right-sized graphs that start local, share like files, and go offline.</h1>
-        <p class="lead">graph-ted is a family of tools for working with graphs that fit on your machine. Keep a graph in a folder you own, share a graph through your file-sync service, and keep working when you are offline.</p>
+        <h1 id="hero-title">A free toolkit for knowledge graphs.</h1>
+        <p class="lead">Create, store, and explore connected knowledge, on your own machine or across a team. We&rsquo;re building graph-ted in the open, starting with the piece that&rsquo;s ready.</p>
         <p class="actions">
-          <a class="button" href="#projects">See the projects</a>
-          <a class="button button-outline" href="https://github.com/graph-ted">graph-ted on GitHub</a>
+          <a class="button" href="/graph-ted-db/">Meet graph-ted-db</a>
+          <a class="button button-outline" href="https://github.com/graph-ted">Follow along on GitHub</a>
         </p>
       </div>
     </section>
 
-    <section class="section" id="projects" aria-labelledby="projects-title">
+    <section class="section section-band" id="why" aria-labelledby="why-title">
+      <div class="wrap band-inner">
+        <h2 id="why-title">Why the database first?</h2>
+        <div class="band-body">
+          <p>While building the full toolkit, we found the database was already useful on its own. graph-ted-db keeps a complete graph in a plain folder, with no server to run, and you can share it through the file-sync service you already use. So we&rsquo;re releasing it early and letting real use shape what comes next.</p>
+          <p class="note">It&rsquo;s early. Expect rough edges and <a href="https://github.com/graph-ted/graph-ted-db/issues">tell us about them</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kit" aria-labelledby="kit-title">
       <div class="wrap">
-        <h2 id="projects-title">Projects</h2>
-        <div class="grid">
+        <h2 id="kit-title">What&rsquo;s in the kit</h2>
+        <div class="kit">
           <article class="card card-live" aria-labelledby="db-title">
+            <p class="badge badge-live">Available now</p>
             <img class="card-logo" src="/assets/logo/graph-ted-db.svg" alt="" width="208" height="71">
             <h3 id="db-title">graph-ted-db</h3>
-            <p>Local property-graph storage for Python. Your graph lives in a folder of plain files on disk. Open it in-process, query it with a Cypher subset, and share a graph through your file-sync service.</p>
-            <div class="snippet" role="group" aria-label="Install and quick start">
-<pre><code><span class="prompt" aria-hidden="true">$ </span>pip install graph-ted-db</code></pre>
-<pre><code>from graph_ted_db import GraphStore, init_graph
-init_graph("./my-graph", name="demo", exist_ok=True)
-g = GraphStore.open("./my-graph")
-g.make_node(labels=["Person"], props={"name": "Alice"})</code></pre>
-            </div>
-            <p class="note">Requires Python 3.10+. Until the package is on PyPI, install from a git checkout: <code>pip install -e .</code></p>
-            <ul class="card-links">
-              <li><a class="button" href="/graph-ted-db/">Docs</a></li>
-              <li><a href="https://github.com/graph-ted/graph-ted-db">GitHub</a></li>
-              <li><a href="/graph-ted-db/llms.txt">llms.txt</a></li>
-            </ul>
+            <p>A graph database that lives in a folder. Use it from Python or over HTTP, query with Cypher, share by syncing the folder.</p>
+            <p class="card-more"><a class="button" href="/graph-ted-db/">Meet graph-ted-db</a></p>
           </article>
 
           <article class="card card-soon" aria-labelledby="app-title">
-            <p class="badge">Coming soon</p>
+            <p class="badge">Coming later</p>
             <h3 id="app-title">graph-ted app</h3>
-            <p>An app for building and exploring your graphs.</p>
+            <p>A workspace for building and exploring knowledge graphs, with AI that turns notes and conversations into connected knowledge.</p>
           </article>
 
-          <article class="card card-soon" aria-labelledby="hosting-title">
-            <p class="badge">Coming soon</p>
-            <h3 id="hosting-title">Team hosting</h3>
-            <p>Hosted graphs for teams that would rather not run their own.</p>
+          <article class="card card-soon" aria-labelledby="hosted-title">
+            <p class="badge">Coming later</p>
+            <h3 id="hosted-title">Hosted graph-ted</h3>
+            <p>Shared graphs for teams that would rather not run their own.</p>
           </article>
         </div>
       </div>

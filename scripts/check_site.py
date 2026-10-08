@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Sanity-check the static site in site/ (standard library only).
 
-- every page parses; local href/src targets exist (paths under /graph-ted-db/
-  are the docs build and are only checked when --build points at a preview build)
+- every page parses; local href/src targets exist (paths under
+  /graph-ted-db/docs/ are the docs build and are only checked when --build
+  points at a build from scripts/build_site.sh)
 - no off-origin assets: scripts, stylesheets, images, icons, fonts, and CSS
   url()s must be same-origin (outbound <a href> links are fine)
-- required meta tags, canonical URL, and a 1200x630 og.png
+- required meta tags and canonical URL on each landing page, 1200x630 og images
+- sources/graph-ted-db.ref pins a full commit; the db landing page keeps its
+  sharing-caveat slot
 - copy rules: canonical domain only, no embedded-database naming
 
     python3 scripts/check_site.py [--build build/]
@@ -23,6 +26,13 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 CANONICAL = "https://graph-ted.com/"
+# Landing pages: path under site/ -> (canonical URL, og image under site/)
+LANDING = {
+    "index.html": (CANONICAL, "assets/og.png"),
+    "graph-ted-db/index.html": (CANONICAL + "graph-ted-db/", "assets/og-graph-ted-db.png"),
+}
+DOCS_PREFIX = "/graph-ted-db/docs/"
+PIN = ROOT / "sources" / "graph-ted-db.ref"
 # Copy rules, written as patterns so the banned strings do not appear here.
 BANNED = {
     "non-canonical domain": re.compile(r"graph(?!-)ted\.com", re.I),
@@ -71,7 +81,7 @@ def png_size(path: Path):
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--build", type=Path, help="preview build dir (checks /graph-ted-db/ links too)")
+    ap.add_argument("--build", type=Path, help="build dir from build_site.sh (checks /graph-ted-db/docs/ links too)")
     args = ap.parse_args()
     base = args.build or SITE
     errors: list[str] = []
@@ -92,15 +102,19 @@ def main() -> int:
         rel = html.relative_to(ROOT)
         p = Page()
         p.feed(html.read_text(encoding="utf-8"))
-        if html.name == "index.html" and html.parent == SITE:
+        landing = LANDING.get(html.relative_to(SITE).as_posix())
+        if landing:
+            canonical, og_image = landing
             for key in REQUIRED_META:
                 if key not in p.meta:
                     errors.append(f"{rel}: missing meta {key[1]}")
-            if p.canonical != CANONICAL:
-                errors.append(f"{rel}: canonical is {p.canonical!r}, want {CANONICAL}")
-            for k in ("og:url",):
-                if p.meta.get(("property", k)) != [CANONICAL]:
-                    errors.append(f"{rel}: {k} should be {CANONICAL}")
+            if p.canonical != canonical:
+                errors.append(f"{rel}: canonical is {p.canonical!r}, want {canonical}")
+            if p.meta.get(("property", "og:url")) != [canonical]:
+                errors.append(f"{rel}: og:url should be {canonical}")
+            for k in (("property", "og:image"), ("name", "twitter:image")):
+                if p.meta.get(k) != [CANONICAL + og_image]:
+                    errors.append(f"{rel}: {k[1]} should be {CANONICAL + og_image}")
             if len(p.meta.get(("name", "theme-color"), [])) < 2:
                 errors.append(f"{rel}: want light and dark theme-color")
             for tag, n in p.has.items():
@@ -115,12 +129,12 @@ def main() -> int:
         for tag, attr, url in p.links:
             parts = urlsplit(url)
             if parts.scheme in ("http", "https") or url.startswith("//"):
-                if tag != "a" and not (tag == "link" and url == CANONICAL):
+                if tag != "a" and not (tag == "link" and url == p.canonical):
                     errors.append(f"{rel}: off-origin asset <{tag} {attr}={url}>")
                 continue
             if parts.scheme or url.startswith("#") or not parts.path:
                 continue
-            if parts.path.startswith("/graph-ted-db/") and not args.build:
+            if parts.path.startswith(DOCS_PREFIX) and not args.build:
                 continue
             target = (base / parts.path.lstrip("/")) if parts.path.startswith("/") else (html.parent / parts.path)
             if target.is_dir():
@@ -131,11 +145,25 @@ def main() -> int:
             if f'id="{frag}"' not in html.read_text(encoding="utf-8"):
                 errors.append(f"{rel}: missing anchor #{frag}")
 
-    og = SITE / "assets" / "og.png"
-    if not og.exists():
-        errors.append("site/assets/og.png missing")
-    elif png_size(og) != (1200, 630):
-        errors.append(f"site/assets/og.png is {png_size(og)}, want (1200, 630)")
+    for _, og_image in LANDING.values():
+        og = SITE / og_image
+        if not og.exists():
+            errors.append(f"site/{og_image} missing")
+        elif png_size(og) != (1200, 630):
+            errors.append(f"site/{og_image} is {png_size(og)}, want (1200, 630)")
+
+    pin = dict(
+        line.split("=", 1) for line in PIN.read_text(encoding="utf-8").splitlines()
+        if "=" in line and not line.startswith("#")
+    ) if PIN.exists() else {}
+    if pin.get("repository") != "https://github.com/graph-ted/graph-ted-db":
+        errors.append("sources/graph-ted-db.ref: repository should be https://github.com/graph-ted/graph-ted-db")
+    if not re.fullmatch(r"[0-9a-f]{40}", pin.get("commit", "")):
+        errors.append("sources/graph-ted-db.ref: commit should be a full 40-character SHA")
+
+    db_page = (SITE / "graph-ted-db" / "index.html").read_text(encoding="utf-8")
+    if "<!-- slot:sharing-caveat" not in db_page:
+        errors.append("site/graph-ted-db/index.html: sharing-caveat slot comment is missing")
 
     for e in errors:
         print(f"error: {e}", file=sys.stderr)

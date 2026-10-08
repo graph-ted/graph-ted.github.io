@@ -20,5 +20,5 @@ jobs:
         run: python3 scripts/sync_tokens.py --check
       - name: HTML, links, meta, and copy rules
         run: python3 scripts/check_site.py
-      - name: preview.sh parses
-        run: bash -n scripts/preview.sh
+      - name: Build scripts parse
+        run: bash -n scripts/preview.sh && bash -n scripts/build_site.sh

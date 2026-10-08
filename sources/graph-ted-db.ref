@@ -1,0 +1,5 @@
+# Source of the graph-ted-db docs published at /graph-ted-db/docs/.
+# scripts/build_site.sh exports this exact commit and builds its MkDocs site.
+# To publish newer docs, bump `commit` in a PR (full SHA from graph-ted-db main).
+repository=https://github.com/graph-ted/graph-ted-db
+commit=85242bef12d0bcf0d1b50ea3d87abef37d3b7cc2

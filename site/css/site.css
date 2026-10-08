@@ -161,13 +161,7 @@ main:focus { outline: none; }
 .section h2 { margin: 0 0 var(--gt-space-8); font-size: 1.875rem; line-height: 1.2; letter-spacing: -0.015em; }
 h3 { margin: 0 0 var(--gt-space-2); font-size: 1.25rem; line-height: 1.3; }
 
-/* Projects grid */
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  grid-template-rows: auto auto;
-  gap: var(--gt-space-6);
-}
+/* Cards */
 .card {
   background: var(--gt-card);
   border: 1px solid var(--gt-border);
@@ -175,7 +169,7 @@ h3 { margin: 0 0 var(--gt-space-2); font-size: 1.25rem; line-height: 1.3; }
   padding: var(--gt-space-6);
 }
 .card p { margin: 0 0 var(--gt-space-4); }
-.card-live { grid-row: span 2; box-shadow: var(--gt-shadow-sm); }
+.card-live { box-shadow: var(--gt-shadow-sm); }
 .card-logo { height: 71px; width: auto; margin-bottom: var(--gt-space-4); }
 .snippet {
   margin: 0 0 var(--gt-space-3);
@@ -207,6 +201,51 @@ h3 { margin: 0 0 var(--gt-space-2); font-size: 1.25rem; line-height: 1.3; }
   color: var(--gt-muted);
 }
 
+/* Early-release band, right under the hero */
+.section-band {
+  padding: var(--gt-space-12) 0;
+  background: var(--gt-header-bg);
+  border-top: 1px solid var(--gt-border);
+  border-bottom: 1px solid var(--gt-border);
+}
+.band-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--gt-space-8);
+  align-items: start;
+}
+.section-band h2 { margin: 0; padding-top: var(--gt-space-4); border-top: 3px solid var(--gt-brand); }
+.band-body p { margin: 0 0 var(--gt-space-4); font-size: 1.125rem; max-width: 44rem; }
+.band-body p.note { margin: 0; font-size: 0.9375rem; }
+.band-body p.note a { font-weight: 500; }
+
+/* What's in the kit: three tiles */
+.kit {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gt-space-6);
+}
+.kit .card { display: flex; flex-direction: column; align-items: flex-start; }
+.kit .card-logo { height: 56px; }
+.kit .card-more { margin: auto 0 0; padding-top: var(--gt-space-2); }
+.badge-live { color: var(--gt-link); border-color: var(--gt-link); }
+
+/* db landing page */
+.breadcrumb ol { list-style: none; margin: 0 0 var(--gt-space-8); padding: 0; display: flex; flex-wrap: wrap; gap: var(--gt-space-2); font-size: 0.9375rem; color: var(--gt-muted); }
+.breadcrumb li + li::before { content: "/"; margin-right: var(--gt-space-2); color: var(--gt-muted); }
+.breadcrumb a { font-weight: 500; }
+.hero-db { padding-top: var(--gt-space-10); }
+.db-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: var(--gt-space-10);
+  align-items: center;
+}
+.hero-logo { height: 71px; width: auto; margin-bottom: var(--gt-space-4); }
+.hero-db h1 { margin-bottom: var(--gt-space-4); }
+.hero-db .lead { margin-bottom: 0; }
+.hero-db .card-links { margin-top: var(--gt-space-4); }
+
 /* Principles */
 .principles {
   list-style: none;
@@ -216,6 +255,7 @@ h3 { margin: 0 0 var(--gt-space-2); font-size: 1.25rem; line-height: 1.3; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gt-space-8);
 }
+.principles-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .principles li { border-top: 3px solid var(--gt-brand); padding-top: var(--gt-space-4); }
 .principles p { margin: 0; color: var(--gt-muted); }
 .principles code { color: var(--gt-fg); }
@@ -231,9 +271,8 @@ h3 { margin: 0 0 var(--gt-space-2); font-size: 1.25rem; line-height: 1.3; }
   .brand img { height: 56px; }
   .site-nav a { padding: var(--gt-space-2); }
   .hero { padding: var(--gt-space-12) 0 var(--gt-space-10); }
-  .grid { grid-template-columns: minmax(0, 1fr); }
-  .card-live { grid-row: auto; }
   .principles { grid-template-columns: minmax(0, 1fr); }
+  .band-inner, .kit, .db-hero { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (prefers-reduced-motion: no-preference) {

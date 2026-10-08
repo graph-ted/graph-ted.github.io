@@ -1,0 +1,5 @@
+# Preview build output (scripts/preview.sh)
+/build/
+__pycache__/
+*.pyc
+.venv/

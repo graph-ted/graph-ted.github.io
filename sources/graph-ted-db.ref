@@ -2,4 +2,4 @@
 # scripts/build_site.sh exports this exact commit and builds its MkDocs site.
 # To publish newer docs, bump `commit` in a PR (full SHA from graph-ted-db main).
 repository=https://github.com/graph-ted/graph-ted-db
-commit=0ec9db5d2dcf841e48268862cd7cb54dc64f606d
+commit=ff3e2216565fb14efb7eee6888e844d67f11283a

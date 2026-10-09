@@ -36,11 +36,15 @@ DOCS_PREFIX = "/graph-ted-db/docs/"
 SHARING = DOCS_PREFIX + "sharing/"
 # Pages that must link to the sharing notes
 SHARING_LINKS = ["index.html", "graph-ted-db/index.html"]
+TRADEMARKS = DOCS_PREFIX + "trademarks/"
+TM_LINE = "openCypher is a trademark of Neo4j, Inc."
 PIN = ROOT / "sources" / "graph-ted-db.ref"
 # Copy rules, written as patterns so the banned strings do not appear here.
 BANNED = {
     "non-canonical domain": re.compile(r"graph(?!-)ted\.com", re.I),
     "embedded-database naming": re.compile(r"s\s*q\s*l\s*i\s*t\s*e", re.I),
+    # Trademark rule: say "openCypher", never the bare language name.
+    "bare query-language name (use openCypher)": re.compile(r"(?<!open)\bC[y]pher\b"),
 }
 REQUIRED_META = [
     ("name", "description"), ("name", "viewport"), ("property", "og:title"),
@@ -168,10 +172,17 @@ def main() -> int:
     for page in SHARING_LINKS:
         if f'href="{SHARING}"' not in (SITE / page).read_text(encoding="utf-8"):
             errors.append(f"site/{page}: no link to {SHARING}")
+    for page in LANDING:
+        text = (SITE / page).read_text(encoding="utf-8")
+        if f'href="{TRADEMARKS}"' not in text:
+            errors.append(f"site/{page}: no footer link to {TRADEMARKS}")
+        if TM_LINE not in text:
+            errors.append(f"site/{page}: no trademark attribution line")
     if args.build:
-        target = args.build / SHARING.lstrip("/") / "index.html"
-        if not target.is_file():
-            errors.append(f"{SHARING} is missing from the build ({target})")
+        for page in (SHARING, TRADEMARKS):
+            target = args.build / page.lstrip("/") / "index.html"
+            if not target.is_file():
+                errors.append(f"{page} is missing from the build ({target})")
 
     for e in errors:
         print(f"error: {e}", file=sys.stderr)
